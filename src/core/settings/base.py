@@ -40,6 +40,7 @@ LOCAL_APP = [
 
 DEV_APP = [
     'app',
+    'account',
 ]
 
 THIRD_PARTY_APP = [

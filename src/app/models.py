@@ -13,8 +13,8 @@ class Competition(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated At"))
 
     class Meta:
-        verbose_name = _("Competition")
-        verbose_name_plural = _("Competitions")
+        verbose_name = _("Musobaqa")
+        verbose_name_plural = _("Musobaqalar")
         db_table = 'competition'
         indexes = [
             models.Index(fields=['title', 'is_active']),
@@ -56,8 +56,8 @@ class Participant(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated At"))
 
     class Meta:
-        verbose_name = _("Participant")
-        verbose_name_plural = _("Participants")
+        verbose_name = _("Ishtirikchi")
+        verbose_name_plural = _("Ishtirikchilar")
         db_table = 'participant'
         indexes = [
             models.Index(fields=['name', 'is_active']),
@@ -68,23 +68,23 @@ class Participant(models.Model):
         return self.name
 
 
-# class Judge(models.Model):
-#     name = models.CharField(max_length=255, verbose_name=_("Name"))
-#     ring = models.ForeignKey(Ring, on_delete=models.SET_NULL, null=True, verbose_name=_("Ring"))
-#
-#     is_active = models.BooleanField(default=True, verbose_name=_("Is Active"))
-#
-#     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
-#     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated At"))
-#
-#     class Meta:
-#         verbose_name = _("Judge")
-#         verbose_name_plural = _("Judges")
-#         db_table = 'judge'
-#         indexes = [
-#             models.Index(fields=['name', 'is_active']),
-#             models.Index(fields=['ring']),
-#         ]
-#
-#     def __str__(self):
-#         return self.name
+class Judge(models.Model):
+    name = models.CharField(max_length=255, verbose_name=_("Name"))
+    ring = models.ForeignKey(Ring, on_delete=models.SET_NULL, null=True, verbose_name=_("Ring"))
+
+    is_active = models.BooleanField(default=True, verbose_name=_("Is Active"))
+
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated At"))
+
+    class Meta:
+        verbose_name = _("Judge")
+        verbose_name_plural = _("Judges")
+        db_table = 'judge'
+        indexes = [
+            models.Index(fields=['name', 'is_active']),
+            models.Index(fields=['ring']),
+        ]
+
+    def __str__(self):
+        return self.name

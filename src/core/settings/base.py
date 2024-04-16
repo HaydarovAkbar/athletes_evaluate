@@ -26,7 +26,6 @@ SECRET_KEY = config("SECRET_KEY")
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 # Application definition
 
 LOCAL_APP = [
@@ -45,7 +44,10 @@ DEV_APP = [
 
 THIRD_PARTY_APP = [
     'rest_framework',
+    'phonenumbers',
 ]
+
+AUTH_USER_MODEL = 'account.models.User'
 
 INSTALLED_APPS = LOCAL_APP + DEV_APP + THIRD_PARTY_APP
 

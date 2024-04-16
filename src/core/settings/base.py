@@ -47,7 +47,7 @@ THIRD_PARTY_APP = [
     'phonenumbers',
 ]
 
-AUTH_USER_MODEL = 'account.models.User'
+AUTH_USER_MODEL = 'account.User'
 
 INSTALLED_APPS = LOCAL_APP + DEV_APP + THIRD_PARTY_APP
 

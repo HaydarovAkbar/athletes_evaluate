@@ -8,22 +8,32 @@ from rest_framework import generics
 from .serializers import LogInSerializer, RefereeUserSerializers
 from .models import *
 
+
 # Create your views here.
 
 class LoginApi(TokenObtainPairView):
-    serializer_class=LogInSerializer
-    
+    serializer_class = LogInSerializer
+
+
 class RefereeAPI(TokenObtainPairView):
-    serializer_class=RefereeUserSerializers
+    serializer_class = RefereeUserSerializers
+
     def post(self, request: Request, *args, **kwargs):
-        username=request.POST['username']
-        password=request.POST['password']
+        username = request.POST['username']
+        password = request.POST['password']
         try:
-            referee=RefereeUser.objects.get(username=username)
+            referee = RefereeUser.objects.get(username=username)
         except:
             raise Exception("Referee not found")
-        if hashers.check_password(password,referee.password):
-            return Response({}, status=status.HTTP_200_OK)
+        if referee.check_password(password):
+            response = {
+                'username': referee.username,
+                'password': referee.password,
+                'ring': referee.ring,
+                'main': referee.main,
+                'groups': [group.name for group in referee.groups.all()],
+                'permissions': [permission.name for permission in referee.user_permissions.all()]
+            }
+            return Response(response, status=status.HTTP_200_OK)
         else:
-            return Response({}, status=status.HTTP_404_NOT_FOUND)
-        
+            return Response(status=status.HTTP_404_NOT_FOUND)

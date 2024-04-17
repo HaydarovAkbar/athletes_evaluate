@@ -10,7 +10,6 @@ from app.models import Ring
 import uuid
 
 
-
 class User(AbstractUser):
     phone_number = PhoneNumberField(
         _("Phone number"),
@@ -36,24 +35,21 @@ class User(AbstractUser):
             models.Index(fields=['username', 'phone_number', 'email']),
         ]
 
-def password_validator(value):
-    pass
-
 
 class RefereeUser(AbstractUser):
     ring = models.ForeignKey(Ring, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_('Ring'))
     main = models.BooleanField(default=False)
     is_referee = models.BooleanField(default=True)
-    username=models.CharField(max_length=100, null=True, validators=[RegexValidator(regex=r"^[1-9 a-z]+$",
-                                                                        message="Enter a valid registration number in the format 1234567654", 
-                                                                        code="invalid_login",)])
-    password=models.PositiveBigIntegerField(validators=[RegexValidator(regex=r"^[1-9]+$",
-                                                                        message="Enter a valid registration number in the format 1234567654", 
-                                                                        code="invalid_login",)])
+    username = models.CharField(max_length=100, validators=[RegexValidator(regex=r"^[1-9 a-z]+$",
+                                                                                      message="Enter a valid username in the format sdfsf7654",
+                                                                                      code="invalid_username", )])
+    password = models.PositiveBigIntegerField(validators=[RegexValidator(regex=r"^[1-9]+$",
+                                                                         message="Enter a valid password in the format 1234567654",
+                                                                         code="invalid_password", )])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(null=True)
-    
-    USERNAME_FIELD="username"
+
+    USERNAME_FIELD = "username"
     groups = models.ManyToManyField(
         Group,
         verbose_name=_('groups'),

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User
+from .models import User, RefereeUser
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -7,8 +7,8 @@ class UserAdmin(admin.ModelAdmin):
     search_fields = ('first_name', 'last_name', 'email', 'phone_number')
     list_filter = ('is_active', 'is_staff', 'is_superuser')
     ordering = ('-date_joined',)
-    paginator = 10
+    # paginator = 10
 
 
 admin.site.register(User, UserAdmin)
-# admin.site.register(Group)
+admin.site.register(RefereeUser)

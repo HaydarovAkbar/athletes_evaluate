@@ -25,7 +25,7 @@ class Competition(models.Model):
 
 
 class Ring(models.Model):
-    title = models.CharField(max_length=255, verbose_name=_("Title"))
+    title=models.CharField(max_length=20, null=True)
     competition = models.ForeignKey(Competition, on_delete=models.SET_NULL, null=True, verbose_name=_("Competition"))
 
     is_active = models.BooleanField(default=True, verbose_name=_("Is Active"))
@@ -35,56 +35,65 @@ class Ring(models.Model):
 
     class Meta:
         verbose_name = _("Ring")
-        verbose_name_plural = _("Rings")
+        verbose_name_plural = _("Ringes")
         db_table = 'ring'
         indexes = [
-            models.Index(fields=['title', 'is_active']),
+            models.Index(fields=['is_active']),
             models.Index(fields=['competition']),
         ]
 
     def __str__(self):
-        return self.title
+        return str(self.created_at)
 
 
-class Participant(models.Model):
-    name = models.CharField(max_length=255, verbose_name=_("Name"))
-    ring = models.ForeignKey(Ring, on_delete=models.SET_NULL, null=True, verbose_name=_("Ring"))
 
-    is_active = models.BooleanField(default=True, verbose_name=_("Is Active"))
+class Match(models.Model):
+    user1=models.CharField(max_length=150, null=True, verbose_name=_('raqib 1'))
+    user2=models.CharField(max_length=150, null=True, verbose_name=_('raqib 2'))
+    ring = models.ForeignKey(Ring, on_delete=models.SET_NULL, null=True)
 
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
-    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated At"))
+    result=models.PositiveIntegerField(null=True)
 
-    class Meta:
-        verbose_name = _("Ishtirikchi")
-        verbose_name_plural = _("Ishtirikchilar")
-        db_table = 'participant'
-        indexes = [
-            models.Index(fields=['name', 'is_active']),
-            models.Index(fields=['ring']),
-        ]
-
-    def __str__(self):
-        return self.name
-
-
-class Judge(models.Model):
-    name = models.CharField(max_length=255, verbose_name=_("Name"))
-    ring = models.ForeignKey(Ring, on_delete=models.SET_NULL, null=True, verbose_name=_("Ring"))
-
-    is_active = models.BooleanField(default=True, verbose_name=_("Is Active"))
+    is_finished = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated At"))
 
+
     class Meta:
-        verbose_name = _("Judge")
-        verbose_name_plural = _("Judges")
-        db_table = 'judge'
+        verbose_name = _("Match")
+        verbose_name_plural = _("Matchs")
+        db_table = 'match'
         indexes = [
-            models.Index(fields=['name', 'is_active']),
+            models.Index(fields=['is_finished']),
             models.Index(fields=['ring']),
         ]
 
     def __str__(self):
-        return self.name
+        return str(self.created_at)
+
+
+class MatchResult(models.Model):
+    ko_choice=(
+        (1,'user1'),
+        (2,'user2'),
+    )
+
+    user1_point=models.CharField(max_length=500, null=True)
+    user2_point=models.CharField(max_length=500, null=True)
+    match=models.OneToOneField(Match, on_delete=models.SET_NULL, null=True)
+
+    total_point1=models.PositiveIntegerField(null=True)
+    total_point2=models.PositiveIntegerField(null=True)
+    
+    is_fineshed=models.BooleanField(default=False)
+
+    knock_out=models.CharField(max_length=10, choices=ko_choice, null=True)
+    class Meta:
+        verbose_name='match_result'
+        verbose_name_plural='match_results'
+
+
+    def __str__(self):
+        return f"{self.match.user1} vs {self.match.user2}'s result"
+    

@@ -9,6 +9,8 @@ from app.models import Ring
 
 import uuid
 
+def password_validator(value):
+    pass 
 
 class User(AbstractUser):
     phone_number = PhoneNumberField(

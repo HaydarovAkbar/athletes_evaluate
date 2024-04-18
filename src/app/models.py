@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils.timezone import now
+from account.models import RefereeUser
 
 
 class Competition(models.Model):
@@ -29,7 +30,7 @@ class Ring(models.Model):
     competition = models.ForeignKey(Competition, on_delete=models.SET_NULL, null=True, verbose_name=_("Competition"))
 
     is_active = models.BooleanField(default=True, verbose_name=_("Is Active"))
-
+    
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated At"))
 
@@ -43,14 +44,13 @@ class Ring(models.Model):
         ]
 
     def __str__(self):
-        return str(self.created_at)
+        return f"Ring for {self.competition.title}"
 
 
 class Match(models.Model):
     user1 = models.CharField(max_length=150, null=True, verbose_name=_('raqib 1'))
     user2 = models.CharField(max_length=150, null=True, verbose_name=_('raqib 2'))
     ring = models.ForeignKey(Ring, on_delete=models.SET_NULL, null=True)
-
     result = models.PositiveIntegerField(null=True)
 
     is_finished = models.BooleanField(default=False)
@@ -80,7 +80,7 @@ class MatchResult(models.Model):
     user1_point = models.CharField(max_length=500, null=True)
     user2_point = models.CharField(max_length=500, null=True)
     match = models.OneToOneField(Match, on_delete=models.SET_NULL, null=True)
-
+    referee=models.OneToOneField(RefereeUser, related_name='match_result', on_delete=models.SET_NULL, null=True)
     total_point1 = models.PositiveIntegerField(null=True)
     total_point2 = models.PositiveIntegerField(null=True)
 
@@ -94,3 +94,5 @@ class MatchResult(models.Model):
 
     def __str__(self):
         return f"{self.match.user1} vs {self.match.user2}'s result"
+
+

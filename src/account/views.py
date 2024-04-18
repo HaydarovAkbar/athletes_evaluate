@@ -8,7 +8,6 @@ from rest_framework import generics
 from .serializers import LogInSerializer, RefereeUserSerializers
 from .models import *
 
-
 # Create your views here.
 
 class LoginApi(TokenObtainPairView):

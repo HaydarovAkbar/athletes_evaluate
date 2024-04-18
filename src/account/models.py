@@ -5,7 +5,7 @@ from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from phonenumber_field.modelfields import PhoneNumberField
 
-from app.models import Ring
+# from app.models import Ring
 
 import uuid
 
@@ -39,10 +39,10 @@ class User(AbstractUser):
 
 
 class RefereeUser(AbstractUser):
-    ring = models.ForeignKey(Ring, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_('Ring'))
+    ring = models.ForeignKey('app.Ring', related_name='referee', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_('Ring'))
     main = models.BooleanField(default=False)
     is_referee = models.BooleanField(default=True)
-    username = models.CharField(max_length=100, validators=[RegexValidator(regex=r"^[1-9 a-z]+$",
+    username = models.CharField(max_length=6,unique=True, validators=[RegexValidator(regex=r"^[1-9 a-z]+$",
                                                                                       message="Enter a valid username in the format sdfsf7654",
                                                                                       code="invalid_username", )])
     password = models.PositiveBigIntegerField(validators=[RegexValidator(regex=r"^[1-9]+$",

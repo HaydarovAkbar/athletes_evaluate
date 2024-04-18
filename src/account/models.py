@@ -38,6 +38,7 @@ class User(AbstractUser):
         ]
 
 
+
 class RefereeUser(AbstractUser):
     ring = models.ForeignKey('app.Ring', related_name='referee', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_('Ring'))
     main = models.BooleanField(default=False)

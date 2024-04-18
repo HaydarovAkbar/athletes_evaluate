@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from .models import User, RefereeUser
+from .models import User
 
 class LogInSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
@@ -18,8 +18,8 @@ class LogInSerializer(TokenObtainPairSerializer):
         model = User
         fields = ['username', 'password']
 
-class RefereeUserSerializers(TokenObtainPairSerializer):
-    class Meta:
-        model = RefereeUser
-        fields = ['username', 'password']
+# class RefereeUserSerializers(TokenObtainPairSerializer):
+#     class Meta:
+#         model = RefereeUser
+#         fields = ['username', 'password']
 

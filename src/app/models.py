@@ -1,8 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils.timezone import now
-from account.models import RefereeUser
-
+from account.models import User
 
 class Competition(models.Model):
     title = models.CharField(max_length=255, verbose_name=_("Title"))
@@ -28,6 +27,7 @@ class Competition(models.Model):
 class Ring(models.Model):
     title = models.CharField(max_length=20, null=True)
     competition = models.ForeignKey(Competition, on_delete=models.SET_NULL, null=True, verbose_name=_("Competition"))
+    user=models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='ring')
 
     is_active = models.BooleanField(default=True, verbose_name=_("Is Active"))
     
@@ -80,7 +80,7 @@ class MatchResult(models.Model):
     user1_point = models.CharField(max_length=500, null=True)
     user2_point = models.CharField(max_length=500, null=True)
     match = models.OneToOneField(Match, on_delete=models.SET_NULL, null=True)
-    referee=models.OneToOneField(RefereeUser, related_name='match_result', on_delete=models.SET_NULL, null=True)
+    referee=models.OneToOneField(User, related_name='match_result', on_delete=models.SET_NULL, null=True)
     total_point1 = models.PositiveIntegerField(null=True)
     total_point2 = models.PositiveIntegerField(null=True)
 

@@ -22,7 +22,16 @@ class User(AbstractUser):
         unique=True,
         blank=True,
         null=True, )
-    updated_at = models.DateTimeField(auto_now=True, null=True)
+    username = models.CharField(max_length=6,unique=True, validators=[RegexValidator(regex=r"^[1-9 a-z]+$",
+                                                                                      message="Enter a valid username in the format sdfsf7654",
+                                                                                      code="invalid_username", )])
+    password = models.PositiveBigIntegerField(validators=[RegexValidator(regex=r"^[1-9]+$",
+                                                                         message="Enter a valid password in the format 1234567654",
+                                                                         code="invalid_password", )])
+    
+    updated_at = models.DateTimeField(null=True)
+
+    USERNAME_FIELD = "username"
 
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
@@ -39,42 +48,42 @@ class User(AbstractUser):
 
 
 
-class RefereeUser(AbstractUser):
-    ring = models.ForeignKey('app.Ring', related_name='referee', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_('Ring'))
-    main = models.BooleanField(default=False)
-    is_referee = models.BooleanField(default=True)
-    username = models.CharField(max_length=6,unique=True, validators=[RegexValidator(regex=r"^[1-9 a-z]+$",
-                                                                                      message="Enter a valid username in the format sdfsf7654",
-                                                                                      code="invalid_username", )])
-    password = models.PositiveBigIntegerField(validators=[RegexValidator(regex=r"^[1-9]+$",
-                                                                         message="Enter a valid password in the format 1234567654",
-                                                                         code="invalid_password", )])
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(null=True)
+# class RefereeUser(AbstractUser):
+#     ring = models.ForeignKey('app.Ring', related_name='referee', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_('Ring'))
+#     main = models.BooleanField(default=False)
+#     is_referee = models.BooleanField(default=True)
+#     username = models.CharField(max_length=6,unique=True, validators=[RegexValidator(regex=r"^[1-9 a-z]+$",
+#                                                                                       message="Enter a valid username in the format sdfsf7654",
+#                                                                                       code="invalid_username", )])
+#     password = models.PositiveBigIntegerField(validators=[RegexValidator(regex=r"^[1-9]+$",
+#                                                                          message="Enter a valid password in the format 1234567654",
+#                                                                          code="invalid_password", )])
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(null=True)
 
-    USERNAME_FIELD = "username"
-    groups = models.ManyToManyField(
-        Group,
-        verbose_name=_('groups'),
-        blank=True,
-        help_text=_(
-            'The groups this user belongs to. A user will get all permissions granted to each of their groups.'),
-        related_name="%(app_label)s_%(class)s_related",  # Change the related_name
-        related_query_name="%(app_label)s_%(class)ss",
-    )
-    user_permissions = models.ManyToManyField(
-        Permission,
-        verbose_name=_('user permissions'),
-        blank=True,
-        help_text=_('Specific permissions for this user.'),
-        related_name="%(app_label)s_%(class)s_related",  # Change the related_name
-        related_query_name="%(app_label)s_%(class)ss",
-    )
+#     USERNAME_FIELD = "username"
+#     groups = models.ManyToManyField(
+#         Group,
+#         verbose_name=_('groups'),
+#         blank=True,
+#         help_text=_(
+#             'The groups this user belongs to. A user will get all permissions granted to each of their groups.'),
+#         related_name="%(app_label)s_%(class)s_related",  # Change the related_name
+#         related_query_name="%(app_label)s_%(class)ss",
+#     )
+#     user_permissions = models.ManyToManyField(
+#         Permission,
+#         verbose_name=_('user permissions'),
+#         blank=True,
+#         help_text=_('Specific permissions for this user.'),
+#         related_name="%(app_label)s_%(class)s_related",  # Change the related_name
+#         related_query_name="%(app_label)s_%(class)ss",
+#     )
 
-    class Meta:
-        verbose_name = 'Hakam'
-        verbose_name_plural = 'Hakamlar'
-        db_table = 'referee_user'
-        indexes = [
-            models.Index(fields=['ring']),
-        ]
+#     class Meta:
+#         verbose_name = 'Hakam'
+#         verbose_name_plural = 'Hakamlar'
+#         db_table = 'referee_user'
+#         indexes = [
+#             models.Index(fields=['ring']),
+#         ]

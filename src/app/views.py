@@ -2,7 +2,7 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .models import Competition, Ring, Match, MatchResult
 from .serializers import CompetitionSerializer, RingSerializer, MatchSerializer, MatchResultSerializer
-from .permissions import MainRefereeAccessPermession
+
 
 class CompetitionCreateApi(generics.ListCreateAPIView):
     queryset=Competition.objects.all()
@@ -53,4 +53,4 @@ class RingCreateByKotib(generics.ListCreateAPIView):
 class MatchCreateOnlyByMainRef(generics.ListCreateAPIView):
     queryset=Match.objects.all()
     serializer_class=MatchSerializer
-    permission_classes=[IsAuthenticated, MainRefereeAccessPermession]
+    permission_classes=[IsAuthenticated]

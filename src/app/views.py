@@ -1,5 +1,6 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
+from django_filters import rest_framework as filters
 from .models import Competition, Ring, Match, MatchResult
 from .serializers import CompetitionSerializer, RingSerializer, MatchSerializer, MatchResultSerializer
 
@@ -7,6 +8,7 @@ class CompetitionCreateApi(generics.ListCreateAPIView):
     queryset=Competition.objects.all()
     serializer_class=CompetitionSerializer
     permission_classes=[IsAuthenticated,] 
+    
 
 class RingCreateApi(generics.ListCreateAPIView):
     queryset=Ring.objects.all()
@@ -27,29 +29,29 @@ class CompetitionUpdateDeleteRetrieveAPi(generics.RetrieveUpdateDestroyAPIView):
     queryset=Competition.objects.all()
     serializer_class=CompetitionSerializer
     permission_classes=[IsAuthenticated]
+    lookup_field=['uuid']
+
 
 class  RingUpdateDeleteRetieveApi(generics.RetrieveUpdateDestroyAPIView):
     queryset=Ring.objects.all()
     serializer_class=RingSerializer
     permission_classes=[IsAuthenticated]
+    filter_backends=[filters.DjangoFilterBackend]
+    filterset_fields=['competition']
+
+    
 
 class MatchUpdateDeleteRetriveAPI(generics.RetrieveUpdateDestroyAPIView):
     queryset=Match.objects.all()
     serializer_class=MatchSerializer
     permission_classes=[IsAuthenticated]
+    filter_backends=[filters.DjangoFilterBackend]
+    filterset_fields=['ring']
 
 class MatchResultUpdateDeleteRetriveApi(generics.RetrieveUpdateDestroyAPIView):
     queryset=MatchResult.objects.all()
     serializer_class=MatchResultSerializer
     permission_classes=[IsAuthenticated]
+    filter_backends=[filters.DjangoFilterBackend]
+    filterset_fields=['match']
 
-
-class RingCreateByKotib(generics.ListCreateAPIView):
-    queryset=Ring.objects.all()
-    serializer_class=RingSerializer
-    permission_classes=[IsAuthenticated]
-
-class MatchCreateOnlyByMainRef(generics.ListCreateAPIView):
-    queryset=Match.objects.all()
-    serializer_class=MatchSerializer
-    permission_classes=[IsAuthenticated]

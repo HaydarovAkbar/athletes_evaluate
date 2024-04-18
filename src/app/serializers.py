@@ -4,11 +4,16 @@ import random
 import string
 from account.models import User
 
+BEGINING_NUMBER=10
+END_NUMBER=99
+LENGTH_OF_NAME=4
+
 def random_char(char):
     return ''.join(random.choice(string.ascii_lowercase) for x in range(char))
 
+
 def generate_key():
-    return f"{random_char(4)}{random.randint(10, 99)}"
+    return f"{random_char(LENGTH_OF_NAME)}{random.randint(BEGINING_NUMBER, END_NUMBER)}"
 
 
 class CompetitionSerializer(serializers.ModelSerializer):

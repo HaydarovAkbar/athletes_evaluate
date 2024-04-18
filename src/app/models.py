@@ -5,7 +5,6 @@ from account.models import User
 import uuid
 
 
-
 class Competition(models.Model):
     title = models.CharField(max_length=255, verbose_name=_("Title"))
     description = models.TextField(verbose_name=_("Description"))
@@ -33,7 +32,7 @@ class Ring(models.Model):
     competition = models.ForeignKey(Competition, on_delete=models.SET_NULL, null=True, verbose_name=_("Competition"))
 
     is_active = models.BooleanField(default=True, verbose_name=_("Is Active"))
-    
+
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated At"))
 
@@ -83,7 +82,7 @@ class MatchResult(models.Model):
     user1_point = models.CharField(max_length=500, null=True)
     user2_point = models.CharField(max_length=500, null=True)
     match = models.OneToOneField(Match, on_delete=models.SET_NULL, null=True)
-    referee=models.OneToOneField(User, related_name='match_result', on_delete=models.SET_NULL, null=True)
+    referee = models.OneToOneField(User, related_name='match_result', on_delete=models.SET_NULL, null=True)
     total_point1 = models.PositiveIntegerField(null=True)
     total_point2 = models.PositiveIntegerField(null=True)
 
@@ -94,8 +93,7 @@ class MatchResult(models.Model):
     class Meta:
         verbose_name = 'match_result'
         verbose_name_plural = 'match_results'
+        db_table = 'match_result'
 
     def __str__(self):
         return f"{self.match.user1} vs {self.match.user2}'s result"
-
-

@@ -1,9 +1,6 @@
 from django.contrib import admin
-from .models import News
-from .models import Image
-
-# Register your models here.
+from .models import Category, Hashtag, News
 
 admin.site.register(News)
-admin.site.register(Image)
-
+admin.site.register(Hashtag)
+admin.site.register(Category)

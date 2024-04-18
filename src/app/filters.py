@@ -1,4 +1,3 @@
 import django_filters
 
-class RingFilter(django_filters.FilterSet):
-    
+class CompetitionFilter(django_filters.FilterSet):

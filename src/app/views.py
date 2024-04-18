@@ -3,7 +3,6 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Competition, Ring, Match, MatchResult
 from .serializers import CompetitionSerializer, RingSerializer, MatchSerializer, MatchResultSerializer
 
-
 class CompetitionCreateApi(generics.ListCreateAPIView):
     queryset=Competition.objects.all()
     serializer_class=CompetitionSerializer

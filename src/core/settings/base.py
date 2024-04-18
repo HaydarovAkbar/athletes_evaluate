@@ -46,6 +46,7 @@ DEV_APP = [
 THIRD_PARTY_APP = [
     'rest_framework',
     'phonenumbers',
+    'django_filters'
 ]
 
 AUTH_USER_MODEL = 'account.User'

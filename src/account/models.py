@@ -22,6 +22,7 @@ class User(AbstractUser):
         blank=True,
         null=True, )
     ring=models.ForeignKey('app.Ring', on_delete=models.SET_NULL, null=True)
+    is_kotib=models.BooleanField(default=False)
     username = models.CharField(max_length=6,unique=True, validators=[RegexValidator(regex=r"^[1-9 a-z]+$",
                                                                   message="Enter a valid username in the format sdfsf7654",
                                                                                       code="invalid_username", )])

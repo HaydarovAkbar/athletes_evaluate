@@ -11,15 +11,16 @@ from django.utils import timezone
 class Category(models.Model):
     title = models.CharField(max_length=255, verbose_name=_("Title"))
 
+    is_active = models.BooleanField(default=True, verbose_name=_("Is active"))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created at"))
 
     def __str__(self):
         return self.title
 
     class Meta:
-        verbose_name = _("Image")
-        verbose_name_plural = _("Images")
-        db_table = 'images'
+        verbose_name = _("Category")
+        verbose_name_plural = _("Categories")
+        db_table = 'categories'
 
 
 class Hashtag(models.Model):
@@ -34,7 +35,7 @@ class Hashtag(models.Model):
 
 
 class News(models.Model):
-    title = models.CharField(max_length=200, verbose_name=_("Title"))
+    title = models.CharField(max_length=255, verbose_name=_("Title"))
     content = models.TextField(verbose_name=_("Content"), null=True)
 
     image = models.ImageField(upload_to="news/", verbose_name=_("Image"), null=True, blank=True)

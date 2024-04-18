@@ -2,19 +2,20 @@ from rest_framework import serializers
 from .models import Category, News, Hashtag
 
 
-class NewsSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = News
-        fields = '__all__'
-
-
 class CategorySerializers(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = '__all__'
+        fields = ('id', 'title', 'is_active')
 
 
 class HashtagSerializers(serializers.ModelSerializer):
     class Meta:
         model = Hashtag
-        fields = '__all__'
+        fields = ('id', 'name')
+
+
+class NewsSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = News
+        fields = ('uuid', 'title', 'content', 'image', 'published_at', 'hashtag', 'category')
+

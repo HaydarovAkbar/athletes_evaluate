@@ -32,7 +32,7 @@ class CompetitionUpdateDeleteRetrieveAPi(generics.RetrieveUpdateDestroyAPIView):
     lookup_field=['uuid']
 
 
-class  RingUpdateDeleteRetieveApi(generics.RetrieveUpdateDestroyAPIView):
+class RingUpdateDeleteRetieveApi(generics.RetrieveUpdateDestroyAPIView):
     queryset=Ring.objects.all()
     serializer_class=RingSerializer
     permission_classes=[IsAuthenticated]

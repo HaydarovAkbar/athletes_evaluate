@@ -2,6 +2,9 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils.timezone import now
 from account.models import User
+import uuid
+
+
 
 class Competition(models.Model):
     title = models.CharField(max_length=255, verbose_name=_("Title"))
@@ -11,6 +14,7 @@ class Competition(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated At"))
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     class Meta:
         verbose_name = _("Musobaqa")
@@ -27,7 +31,6 @@ class Competition(models.Model):
 class Ring(models.Model):
     title = models.CharField(max_length=20, null=True)
     competition = models.ForeignKey(Competition, on_delete=models.SET_NULL, null=True, verbose_name=_("Competition"))
-    user=models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='ring')
 
     is_active = models.BooleanField(default=True, verbose_name=_("Is Active"))
     

@@ -4,7 +4,6 @@ from django.utils.timezone import now
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from phonenumber_field.modelfields import PhoneNumberField
-
 # from app.models import Ring
 
 import uuid
@@ -22,18 +21,18 @@ class User(AbstractUser):
         unique=True,
         blank=True,
         null=True, )
+    ring=models.ForeignKey('app.Ring', on_delete=models.SET_NULL, null=True)
     username = models.CharField(max_length=6,unique=True, validators=[RegexValidator(regex=r"^[1-9 a-z]+$",
-                                                                                      message="Enter a valid username in the format sdfsf7654",
+                                                                  message="Enter a valid username in the format sdfsf7654",
                                                                                       code="invalid_username", )])
     password = models.PositiveBigIntegerField(validators=[RegexValidator(regex=r"^[1-9]+$",
                                                                          message="Enter a valid password in the format 1234567654",
                                                                          code="invalid_password", )])
     
     updated_at = models.DateTimeField(null=True)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     USERNAME_FIELD = "username"
-
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"

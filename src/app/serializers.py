@@ -20,22 +20,22 @@ class RingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model=Ring
-        fields=['title', 'competition']
+        fields=['competition']
 
 
     def create(self, validated_data):
-        title=validated_data['title']
         competition=validated_data['competition']
-        ring=Ring.objects.create(title=title, competition=competition)
+        rings=Ring.objects.all()
+        ring=Ring.objects.create(title=f"ring_{len(rings)+1}", competition=competition)
         for i in range(3):
-            User.objects.create(username=generate_key(), password='100000')
+            User.objects.create(username=generate_key(), password='100000', ring=ring)
 
-            User.objects.create(username=generate_key(), password='100000')
+            User.objects.create(username=generate_key(), password='100000', ring=ring)
         return ring
     
     def to_representation(self, instance):
         ring =  super().to_representation(instance)
-        referees=User.objects.filter(ring__title=ring['title'])
+        referees=User.objects.filter(ring__competition=ring['competition'])
         ring["data"]=[]
         for ref in referees:
             ring['data']+= [{'username':str(ref.username),

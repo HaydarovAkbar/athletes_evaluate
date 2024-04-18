@@ -10,6 +10,7 @@ from .models import *
 
 # Create your views here.
 
+
 class LoginApi(TokenObtainPairView):
     serializer_class = LogInSerializer
 

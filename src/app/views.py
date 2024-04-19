@@ -55,3 +55,10 @@ class MatchResultUpdateDeleteRetriveApi(generics.RetrieveUpdateDestroyAPIView):
     filter_backends=[filters.DjangoFilterBackend]
     filterset_fields=['match']
 
+
+
+class ActiveRingApi(generics.ListAPIView):
+    queryset=Ring.objects.all()
+    serializer_class=RingSerializer
+    permission_classes=[IsAuthenticated]
+    

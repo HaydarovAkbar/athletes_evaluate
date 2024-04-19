@@ -26,9 +26,7 @@ class User(AbstractUser):
     username = models.CharField(max_length=6,unique=True, validators=[RegexValidator(regex=r"^[1-9 a-z]+$",
                                                                   message="Enter a valid username in the format sdfsf7654",
                                                                                       code="invalid_username", )])
-    password = models.PositiveBigIntegerField(validators=[RegexValidator(regex=r"^[1-9]+$",
-                                                                         message="Enter a valid password in the format 1234567654",
-                                                                         code="invalid_password", )])
+    password = models.CharField(max_length=255)
     
     updated_at = models.DateTimeField(null=True)
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)

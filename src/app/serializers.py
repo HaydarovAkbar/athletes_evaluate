@@ -8,13 +8,18 @@ BEGINING_NUMBER=10
 END_NUMBER=99
 LENGTH_OF_NAME=4
 
+PASSWORD_BEGINING=100000
+PASSWORD_END=1000000
+
 def random_char(char):
     return ''.join(random.choice(string.ascii_lowercase) for x in range(char))
 
 
-def generate_key():
+def generate_username():
     return f"{random_char(LENGTH_OF_NAME)}{random.randint(BEGINING_NUMBER, END_NUMBER)}"
 
+def generate_password():
+    return str(random.randint(100000))
 
 class CompetitionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -33,9 +38,9 @@ class RingSerializer(serializers.ModelSerializer):
         rings=Ring.objects.all()
         ring=Ring.objects.create(title=f"ring_{len(rings)+1}", competition=competition)
         for i in range(3):
-            User.objects.create(username=generate_key(), password='100000', ring=ring)
+            User.objects.create(username=generate_username(), password=generate_password(), ring=ring)
 
-            User.objects.create(username=generate_key(), password='100000', ring=ring)
+            User.objects.create(username=generate_username(), password=generate_password(), ring=ring)
         return ring
     
     def to_representation(self, instance):

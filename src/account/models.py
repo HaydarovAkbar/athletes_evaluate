@@ -8,9 +8,6 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 import uuid
 
-def password_validator(value):
-    pass 
-
 class User(AbstractUser):
     phone_number = PhoneNumberField(
         _("Phone number"),

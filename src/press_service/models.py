@@ -16,10 +16,8 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
-    class Meta:
-        verbose_name = _("Image")
-        verbose_name_plural = _("Images")
-        db_table = 'images'
+    abstract = True
+
 
 
 class Hashtag(models.Model):
@@ -53,7 +51,7 @@ class News(models.Model):
 
     def get_image_url(self):
         if self.image:
-            return settings.MEDIA_URL + str(self.image)
+            return settings.HOST + str(self.image.url)
         return None
 
     def save(self, *args, **kwargs):
@@ -62,8 +60,6 @@ class News(models.Model):
         return self
 
     class Meta:
-        verbose_name = _("News")
-        verbose_name_plural = _("News")
         db_table = 'news'
         indexes = [
             models.Index(fields=['title', 'created_at']),

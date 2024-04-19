@@ -1,11 +1,12 @@
+from django.contrib.auth.models import Group
 from rest_framework import serializers
 from .models import Competition, Ring, Match, MatchResult
 import random
 import string
 from account.models import User
 
-BEGINING_NUMBER=10
-END_NUMBER=99
+BEGINING_NUMBER_FOR_USERNAME=10
+END_NUMBER_FOR_USERNAME=99
 LENGTH_OF_NAME=4
 
 PASSWORD_BEGINING=100000
@@ -14,12 +15,11 @@ PASSWORD_END=1000000
 def random_char(char):
     return ''.join(random.choice(string.ascii_lowercase) for x in range(char))
 
-
 def generate_username():
-    return f"{random_char(LENGTH_OF_NAME)}{random.randint(BEGINING_NUMBER, END_NUMBER)}"
+    return f"{random_char(LENGTH_OF_NAME)}{random.randint(BEGINING_NUMBER_FOR_USERNAME, END_NUMBER_FOR_USERNAME)}"
 
 def generate_password():
-    return str(random.randint(100000))
+    return str(random.randint(PASSWORD_BEGINING, PASSWORD_END))
 
 class CompetitionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -35,17 +35,22 @@ class RingSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         competition=validated_data['competition']
+       
         rings=Ring.objects.all()
         ring=Ring.objects.create(title=f"ring_{len(rings)+1}", competition=competition)
+       
+        referee_groups=Group.objects.get(name='referee')
+        main_referee_groups=Group.objects.get('main_referee')
         for i in range(3):
-            User.objects.create(username=generate_username(), password=generate_password(), ring=ring)
-
-            User.objects.create(username=generate_username(), password=generate_password(), ring=ring)
+            User.objects.create(username=generate_username(), password=generate_password(), ring=ring).groups.add(referee_groups)
+      
+        User.objects.create(username=generate_username(), password=generate_password(), ring=ring).groups.add(main_referee_groups)  
         return ring
     
     def to_representation(self, instance):
         ring =  super().to_representation(instance)
         referees=User.objects.filter(ring__competition=ring['competition'])
+        
         ring["data"]=[]
         for ref in referees:
             ring['data']+= [{'username':str(ref.username),

@@ -21,6 +21,7 @@ def generate_username():
 def generate_password():
     return str(random.randint(PASSWORD_BEGINING, PASSWORD_END))
 
+
 class CompetitionSerializer(serializers.ModelSerializer):
     class Meta:
         model=Competition
@@ -39,12 +40,11 @@ class RingSerializer(serializers.ModelSerializer):
         rings=Ring.objects.all()
         ring=Ring.objects.create(title=f"ring_{len(rings)+1}", competition=competition)
        
-        referee_groups=Group.objects.get(name='referee')
-        main_referee_groups=Group.objects.get('main_referee')
+        referees_group=Group.objects.get(name='referees')
+        main_referees_group=Group.objects.get(name='main_referees')
         for i in range(3):
-            User.objects.create(username=generate_username(), password=generate_password(), ring=ring).groups.add(referee_groups)
-      
-        User.objects.create(username=generate_username(), password=generate_password(), ring=ring).groups.add(main_referee_groups)  
+            User.objects.create(username=generate_username(), password=generate_password(), ring=ring).groups.add(referees_group)
+        User.objects.create(username=generate_username(), password=generate_password(), ring=ring).groups.add(main_referees_group)
         return ring
     
     def to_representation(self, instance):
@@ -69,3 +69,15 @@ class MatchResultSerializer(serializers.ModelSerializer):
         model=MatchResult
         fields='__all__'
 
+class ActiveRingSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model=Ring
+        fields=['title',]
+
+class ActiveCompetitionSerializer(serializers.ModelSerializer):
+    rings=serializers.PrimaryKeyRelatedField(many=True)
+
+    class Meta:
+        model=Competition
+        fields=['title', 'description', 'is_active', 'rings']

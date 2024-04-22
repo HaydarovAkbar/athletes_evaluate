@@ -6,9 +6,8 @@ from .models import User
 class LogInSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         attrs = super().validate(attrs)
-        if not self.user.is_superuser:
+        if not self.user.is_active:
             raise serializers.ValidationError("You are not allowed to login")
-        # attrs["organization"] = self.user.organization.title
         attrs["full_name"] = self.user.first_name + " " + self.user.last_name
         attrs["phone_number"] = self.user.phone_number
         attrs["groups"] = [group.name for group in self.user.groups.all()]

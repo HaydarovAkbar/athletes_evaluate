@@ -49,6 +49,7 @@ THIRD_PARTY_APP = [
     'rest_framework',
     'phonenumbers',
     'django_filters'
+    # "corsheaders",
 ]
 
 AUTH_USER_MODEL = 'account.User'

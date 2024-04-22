@@ -1,9 +1,10 @@
 from django.contrib.auth.models import Group
 from rest_framework import serializers
-from .models import Competition, Ring, Match, MatchResult
 import random
 import string
 from account.models import User
+
+from .models import Competition, Ring, Match, MatchResult
 
 BEGINING_NUMBER_FOR_USERNAME = 10
 END_NUMBER_FOR_USERNAME = 99
@@ -81,7 +82,7 @@ class ActiveRingSerializer(serializers.ModelSerializer):
 
 
 class ActiveCompetitionSerializer(serializers.ModelSerializer):
-    rings = serializers.PrimaryKeyRelatedField(many=True)
+    rings = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Competition

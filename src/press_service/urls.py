@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import NewsViewSet, NewsDetailViewSet
 
+from .views import NewsViewSet, NewsDetailViewSet
 
 urlpatterns = [
     path('news/', NewsViewSet.as_view(), name='news'),

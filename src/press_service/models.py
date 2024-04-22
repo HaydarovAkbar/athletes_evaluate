@@ -19,7 +19,6 @@ class Category(models.Model):
     abstract = True
 
 
-
 class Hashtag(models.Model):
     name = models.CharField(max_length=255, verbose_name=_("Name"))
 

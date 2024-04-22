@@ -1,10 +1,7 @@
-from django.shortcuts import render
-from .serializers import NewsSerializers
-from .models import News
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 
-
-# Create your views here.
+from .serializers import NewsSerializers
+from .models import News
 
 
 class NewsViewSet(ListAPIView):

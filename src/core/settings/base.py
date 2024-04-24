@@ -30,6 +30,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 LOCAL_APP = [
+    "daphne",
     'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -85,7 +86,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'
+ASGI_APPLICATION = "core.asgi.application"
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -111,6 +121,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 
 ]
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/

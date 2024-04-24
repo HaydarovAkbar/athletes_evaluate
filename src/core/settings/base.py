@@ -48,8 +48,9 @@ DEV_APP = [
 THIRD_PARTY_APP = [
     'rest_framework',
     'phonenumbers',
-    'django_filters'
-    # "corsheaders",
+    'django_filters',
+    "corsheaders",
+    'drf_yasg',
 ]
 
 AUTH_USER_MODEL = 'account.User'
@@ -103,8 +104,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        'OPTIONS': {
-            'min_length': 6, }
+     'OPTIONS': {
+         'min_length': 6, }
      },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
@@ -140,3 +141,5 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
     'django.contrib.auth.hashers.Argon2PasswordHasher',
 ]
+
+HOST = 'http://172.17.17.68:8000'

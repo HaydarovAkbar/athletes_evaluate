@@ -14,16 +14,17 @@ PASSWORD_BEGINING = 100000
 PASSWORD_END = 1000000
 
 
-def random_char(char):
-    return ''.join(random.choice(string.ascii_lowercase) for x in range(char))
+# def random_char(char):
+#     return ''.join(random.choice(string.ascii_lowercase) for x in range(char))
+#
+#
+# def generate_username():
+#     return f"{random_char(LENGTH_OF_NAME)}{random.randint(BEGINING_NUMBER_FOR_USERNAME, END_NUMBER_FOR_USERNAME)}"
 
 
-def generate_username():
-    return f"{random_char(LENGTH_OF_NAME)}{random.randint(BEGINING_NUMBER_FOR_USERNAME, END_NUMBER_FOR_USERNAME)}"
-
-
-def generate_password():
-    return str(random.randint(PASSWORD_BEGINING, PASSWORD_END))
+generate_username = lambda: ''.join(random.choice(string.ascii_lowercase) for _ in range(4)) + str(
+    random.randint(10, 99))
+generate_password = lambda: str(random.randint(PASSWORD_BEGINING, PASSWORD_END))
 
 
 class CompetitionSerializer(serializers.ModelSerializer):

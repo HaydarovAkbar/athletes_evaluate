@@ -13,7 +13,6 @@ LENGTH_OF_NAME = 4
 PASSWORD_BEGINING = 100000
 PASSWORD_END = 1000000
 
-
 # def random_char(char):
 #     return ''.join(random.choice(string.ascii_lowercase) for x in range(char))
 #

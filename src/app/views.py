@@ -52,6 +52,14 @@ class RingUpdateDeleteRetieveApi(generics.RetrieveUpdateDestroyAPIView):
     filterset_fields = ['competition']
 
 
+class GetRingApi(generics.ListAPIView):
+    queryset = Ring.objects.all()
+    serializer_class = RingSerializer
+    permission_classes = [IsAuthenticated]
+    filter_backends = [filters.DjangoFilterBackend]
+    filterset_fields = ['competition']
+
+
 class MatchUpdateDeleteRetriveAPI(generics.RetrieveUpdateDestroyAPIView):
     queryset = Match.objects.all()
     serializer_class = MatchSerializer

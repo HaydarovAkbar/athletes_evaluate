@@ -58,8 +58,16 @@ class RingSerializer(serializers.ModelSerializer):
 
         ring["data"] = []
         for ref in referees:
-            ring['data'] += [{'username': str(ref.username),
-                              'password': str(ref.password)}, ]
+            if 'referees' in ref.groups.values_list('name', flat=True):
+                ring['data'] += [{'username': str(ref.username),
+                                  'password': str(ref.password),
+                                  'is_main': False},
+                                 ]
+            else:
+                ring['data'] += [{'username': str(ref.username),
+                                  'password': str(ref.password),
+                                  'is_main': True},
+                                 ]
         return ring
 
 

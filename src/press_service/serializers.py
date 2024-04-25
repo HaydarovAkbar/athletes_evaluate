@@ -6,16 +6,16 @@ from .models import Category, News, Hashtag
 class NewsSerializers(serializers.ModelSerializer):
     class Meta:
         model = News
-        fields = '__all__'
+        fields = ('title', 'content', 'image', 'published_at', 'uuid', 'hashtag', 'category')
 
 
 class CategorySerializers(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = '__all__'
+        fields = ('title',)
 
 
 class HashtagSerializers(serializers.ModelSerializer):
     class Meta:
         model = Hashtag
-        fields = '__all__'
+        fields = ('name',)

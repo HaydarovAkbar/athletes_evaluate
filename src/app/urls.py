@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (CompetitionCreateApi, RingCreateApi, MatchCreateApi, MatchResultCreateApi,
                     CompetitionUpdateDeleteRetrieveAPi, RingUpdateDeleteRetieveApi, MatchResultUpdateDeleteRetriveApi,
-                    MatchUpdateDeleteRetriveAPI)
+                    MatchUpdateDeleteRetriveAPI, hello)
 
 urlpatterns = [
     path('competition/', CompetitionCreateApi.as_view(), name='competition'),
@@ -14,4 +14,7 @@ urlpatterns = [
     path('matchresult/', MatchResultCreateApi.as_view(), name='matchresult'),
     path('matchresult/<int:pk>/', MatchResultUpdateDeleteRetriveApi.as_view(),
          name='match_result_update_retrieve_destroy'),
+     path("hello/", hello, name='hello'),
+
+
 ]

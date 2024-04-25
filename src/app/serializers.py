@@ -35,7 +35,7 @@ class CompetitionSerializer(serializers.ModelSerializer):
 class RingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ring
-        fields = ['competition']
+        fields = ['competition', 'title']
 
     def create(self, validated_data):
         competition = validated_data['competition']
@@ -54,7 +54,7 @@ class RingSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         ring = super().to_representation(instance)
-        referees = User.objects.filter(ring__competition=ring['competition'])
+        referees = User.objects.filter(ring=instance).order_by('-id')
 
         ring["data"] = []
         for ref in referees:

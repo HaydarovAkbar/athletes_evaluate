@@ -1,4 +1,5 @@
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
+from django_filters import rest_framework as filters
 
 from .serializers import NewsSerializers, CategorySerializers, HashtagSerializers
 from .models import News, Category, Hashtag
@@ -9,6 +10,8 @@ class NewsViewSet(ListAPIView):
     queryset = News.objects.all()
     serializer_class = NewsSerializers
     pagination_class = TenPagination
+    filter_backends = [filters.DjangoFilterBackend]
+    filterset_fields = ('title', 'hashtag', 'published_at')
 
 
 class NewsDetailViewSet(RetrieveUpdateDestroyAPIView):
@@ -36,3 +39,4 @@ class HashtagViewSet(ListAPIView):
 class HashtagDetailViewSet(RetrieveUpdateDestroyAPIView):
     queryset = Hashtag.objects.all()
     serializer_class = HashtagSerializers
+

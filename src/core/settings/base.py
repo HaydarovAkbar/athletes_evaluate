@@ -13,6 +13,7 @@ from django.contrib.auth import password_validation
 from pathlib import Path
 from decouple import config
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -52,6 +53,8 @@ THIRD_PARTY_APP = [
     'django_filters',
     "corsheaders",
     'drf_yasg',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
 ]
 
 AUTH_USER_MODEL = 'account.User'
@@ -59,8 +62,10 @@ AUTH_USER_MODEL = 'account.User'
 INSTALLED_APPS = LOCAL_APP + DEV_APP + THIRD_PARTY_APP
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -156,12 +161,30 @@ PASSWORD_HASHERS = [
 
 HOST = 'http://172.17.17.68:8000'
 
-
-# CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
-CORS_ALLOW_HEADERS = [
-    '*'
-]
+# CORS_ALLOW_HEADERS = [
+#     '*'
+# ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DATETIME_FORMAT': '%Y-%m-%d %H:%M:%S',
+}
+
+# JWT settings
+
+SIMPLE_JWT = {
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=2),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": False,
+    'user_model': 'account.User',
+}
+# AXES settings

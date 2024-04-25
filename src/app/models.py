@@ -7,12 +7,13 @@ import uuid
 
 class Competition(models.Model):
     title = models.CharField(max_length=255, verbose_name=_("Title"))
-    description = models.TextField(verbose_name=_("Description"))
+    description = models.TextField(verbose_name=_("Description"), null=True, blank=True)
 
     is_active = models.BooleanField(default=True, verbose_name=_("Is Active"))
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated At"))
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name=_("User"))
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     class Meta:

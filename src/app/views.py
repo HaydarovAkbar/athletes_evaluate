@@ -2,16 +2,21 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from django_filters import rest_framework as filters
 
-
 from .models import Competition, Ring, Match, MatchResult
 from .serializers import CompetitionSerializer, RingSerializer, MatchSerializer, MatchResultSerializer, \
     ActiveCompetitionSerializer
+from .pagination.base import TenPagination
 
 
 class CompetitionCreateApi(generics.ListCreateAPIView):
     queryset = Competition.objects.all()
     serializer_class = CompetitionSerializer
     permission_classes = [IsAuthenticated, ]
+    pagination_class = TenPagination
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+        return serializer
 
 
 class RingCreateApi(generics.ListCreateAPIView):

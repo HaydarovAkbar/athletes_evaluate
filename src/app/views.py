@@ -2,10 +2,7 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from django_filters import rest_framework as filters
 
-<<<<<<< HEAD
-from django.shortcuts import render
-=======
->>>>>>> e6ca4f9c7e8da30ea28f9b4003e268d285796d5a
+
 from .models import Competition, Ring, Match, MatchResult
 from .serializers import CompetitionSerializer, RingSerializer, MatchSerializer, MatchResultSerializer, \
     ActiveCompetitionSerializer

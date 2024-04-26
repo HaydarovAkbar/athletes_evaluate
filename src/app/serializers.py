@@ -55,6 +55,7 @@ class RingSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         ring = super().to_representation(instance)
         referees = User.objects.filter(ring=instance).order_by('-id')
+        ring['title'] = instance.competition.title
 
         ring["data"] = []
         for ref in referees:

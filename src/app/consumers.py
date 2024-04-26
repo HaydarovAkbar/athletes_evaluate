@@ -30,7 +30,7 @@ class MainRefereeMatchResultConsumer(ListModelMixin, GenericAsyncAPIConsumer):
     def get_queryset(self, **kwargs) -> QuerySet:
         qs = super().get_queryset(**kwargs)
         user = self.scope['user']
-        return qs.filter(is_finished=False, match__ring = user.ring)
+        return qs.filter(is_finished=False, match__ring=user.ring)
 
     async def connect(self):
         self.model_change.subscribe()

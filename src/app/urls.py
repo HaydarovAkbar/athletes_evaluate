@@ -3,7 +3,7 @@ from .views import (CompetitionCreateApi, RingCreateApi, MatchCreateApi, MatchRe
                     CompetitionUpdateDeleteRetrieveAPi, RingUpdateDeleteRetieveApi, MatchResultUpdateDeleteRetriveApi,
                     MatchUpdateDeleteRetriveAPI, GetRingApi)
 
-from .routing import websocket_urlpatterns as ws_urlpatterns
+# from .routing import websocket_urlpatterns as ws_urlpatterns
 
 urlpatterns = [
     path('competition/', CompetitionCreateApi.as_view(), name='competition'),
@@ -19,4 +19,4 @@ urlpatterns = [
          name='match_result_update_retrieve_destroy'),
 ]
 
-urlpatterns += ws_urlpatterns
+# urlpatterns += ws_urlpatterns

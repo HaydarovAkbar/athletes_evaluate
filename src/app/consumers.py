@@ -40,6 +40,7 @@ class MainRefereeMatchResultConsumer(ListModelMixin, GenericAsyncAPIConsumer):
     async def model_change(self, message, observer=None, **kwargs):
         await self.send_json(message)
 
-    # @model_change.serialize
-    # def model_serialize(self, instance, action, **kwargs):
-    #     return dict(data=MatchResultSerializer(instance=instance).data, action=action.value)
+    @model_change.serializer
+    def model_serialize(self, instance, action, request_id=None, **kwargs):
+        print(dict(data=MatchResultSerializer(instance=instance).data, action=action.value))
+        return dict(data=MatchResultSerializer(instance=instance).data, action=action.value)

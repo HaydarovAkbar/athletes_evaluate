@@ -88,7 +88,7 @@ class MatchResult(models.Model):
     total_point1 = models.PositiveIntegerField(null=True)
     total_point2 = models.PositiveIntegerField(null=True)
 
-    is_fineshed = models.BooleanField(default=False)
+    is_finished = models.BooleanField(default=False)
 
     knock_out = models.CharField(max_length=10, choices=ko_choice, null=True)
 

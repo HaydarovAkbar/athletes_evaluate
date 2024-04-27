@@ -14,7 +14,7 @@ from djangochannelsrestframework.observer import model_observer
 class MatchResultConsumer(CreateModelMixin, UpdateModelMixin, GenericAsyncAPIConsumer):
     queryset = MatchResult.objects.all()
     serializer_class = MatchResultSerializer
-    permission_classes = (permissions.AllowAny,)
+    # permission_classes = (permissions.AllowAny,)
 
     def get_queryset(self, **kwargs) -> QuerySet:
         qs = super().get_queryset(**kwargs)
@@ -25,19 +25,19 @@ class MatchResultConsumer(CreateModelMixin, UpdateModelMixin, GenericAsyncAPICon
 class MainRefereeMatchResultConsumer(ListModelMixin, GenericAsyncAPIConsumer):
     queryset = MatchResult.objects.all()
     serializer_class = MatchResultSerializer
-    permission_classes = (permissions.AllowAny)
+    # permission_classes = (permissions.AllowAny)
 
-    def get_queryset(self, **kwargs) -> QuerySet:
-        qs = super().get_queryset(**kwargs)
-        user = self.scope['user']
-        return qs.filter(is_finished=False, match__ring=user.ring)
+    # def get_queryset(self, **kwargs) -> QuerySet:
+    #     qs = super().get_queryset(**kwargs)
+    #     user = self.scope['user']
+    #     return qs.filter(is_finished=False, match__ring=user.ring)
 
-    async def connect(self):
-        self.model_change.subscribe()
+    async def connect(self, **kwargs):
         await super().connect()
+        self.model_change.subscribe()
 
     @model_observer(MatchResult)
-    async def model_change(self, message, observer=None, **kwargs):
+    async def model_change(self, message, **kwargs):
         await self.send_json(message)
 
     @model_change.serializer

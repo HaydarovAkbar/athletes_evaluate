@@ -2,28 +2,15 @@ from django.contrib.auth.models import Group
 from rest_framework import serializers
 import random
 import string
+from django.conf import settings
+
 from account.models import User
 
 from .models import Competition, Ring, Match, MatchResult
 
-BEGINING_NUMBER_FOR_USERNAME = 10
-END_NUMBER_FOR_USERNAME = 99
-LENGTH_OF_NAME = 4
-
-PASSWORD_BEGINING = 100000
-PASSWORD_END = 1000000
-
-# def random_char(char):
-#     return ''.join(random.choice(string.ascii_lowercase) for x in range(char))
-#
-#
-# def generate_username():
-#     return f"{random_char(LENGTH_OF_NAME)}{random.randint(BEGINING_NUMBER_FOR_USERNAME, END_NUMBER_FOR_USERNAME)}"
-
-
 generate_username = lambda: ''.join(random.choice(string.ascii_lowercase) for _ in range(4)) + str(
     random.randint(10, 99))
-generate_password = lambda: str(random.randint(PASSWORD_BEGINING, PASSWORD_END))
+generate_password = lambda: str(random.randint(settings.PASSWORD_BEGINING, settings.PASSWORD_END))
 
 
 class CompetitionSerializer(serializers.ModelSerializer):

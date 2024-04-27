@@ -90,7 +90,7 @@ class MatchResult(models.Model):
 
     is_finished = models.BooleanField(default=False)
 
-    knock_out = models.CharField(max_length=10, choices=ko_choice, null=True)
+    knock_out = models.CharField(max_length=10, choices=ko_choice, null=True, blank=True)
 
     class Meta:
         verbose_name = 'match_result'

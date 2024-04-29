@@ -64,6 +64,14 @@ class MatchSerializer(serializers.ModelSerializer):
         model = Match
         fields = '__all__'
 
+    def create(self, validated_data):
+        match = self.Meta.model.objects.create(**validated_data)
+        users = User.objects.filter(ring=match.ring, is_active=True)
+        for user in users:
+            if 'referees' in user.groups.values_list('name', flat=True):
+                MatchResult.objects.create(match=match, referee=user)
+        return match
+
 
 class MatchResultSerializer(serializers.ModelSerializer):
     class Meta:

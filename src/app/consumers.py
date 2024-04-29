@@ -16,10 +16,10 @@ class MatchResultConsumer(CreateModelMixin, UpdateModelMixin, GenericAsyncAPICon
     serializer_class = MatchResultSerializer
     # permission_classes = (permissions.AllowAny,)
 
-    def get_queryset(self, **kwargs) -> QuerySet:
-        qs = super().get_queryset(**kwargs)
-        user = self.scope['user']
-        return qs.filter(referee=user, is_finished=False)
+    # def get_queryset(self, **kwargs) -> QuerySet:
+    #     qs = super().get_queryset(**kwargs)
+    #     # user = self.scope['user']
+    #     return qs.filter(referee=user, is_finished=False)
 
 
 class MainRefereeMatchResultConsumer(ListModelMixin, GenericAsyncAPIConsumer):
@@ -27,10 +27,10 @@ class MainRefereeMatchResultConsumer(ListModelMixin, GenericAsyncAPIConsumer):
     serializer_class = MatchResultSerializer
     # permission_classes = (permissions.AllowAny)
 
-    def get_queryset(self, **kwargs) -> QuerySet:
-        qs = super().get_queryset(**kwargs)
-        user = self.scope['user']
-        return qs.filter(is_finished=False, match__ring=user.ring)
+    # def get_queryset(self, **kwargs) -> QuerySet:
+    #     qs = super().get_queryset(**kwargs)
+    #     user = self.scope['user']
+    #     return qs.filter(is_finished=False, match__ring=user.ring)
 
     async def connect(self, **kwargs):
         await super().connect()

@@ -14,9 +14,9 @@ from djangochannelsrestframework.observer import model_observer
 class MatchResultConsumer(CreateModelMixin, UpdateModelMixin, GenericAsyncAPIConsumer):
     queryset = MatchResult.objects.all()
     serializer_class = MatchResultSerializer
-    # permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.AllowAny,)
 
-    # def get_queryset(self, **kwargs) -> QuerySet:
+    # def get_queryset(self, **kwar gs) -> QuerySet:
     #     qs = super().get_queryset(**kwargs)
     #     # user = self.scope['user']
     #     return qs.filter(referee=user, is_finished=False)

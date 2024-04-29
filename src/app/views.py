@@ -80,3 +80,15 @@ class ActiveCompetitionApi(generics.ListAPIView):
     queryset = Ring.objects.all()
     serializer_class = ActiveCompetitionSerializer
     permission_classes = [IsAuthenticated]
+
+
+class GetMatchResultApi(generics.ListAPIView):
+    queryset = MatchResult.objects.all()
+    serializer_class = MatchResultSerializer
+    permission_classes = [IsAuthenticated]
+    filter_backends = [filters.DjangoFilterBackend]
+    filterset_fields = ['match']
+
+    def get_queryset(self):
+        user = self.request.user
+        return MatchResult.objects.filter(referee=user, is_finished=False)

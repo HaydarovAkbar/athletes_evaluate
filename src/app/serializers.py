@@ -13,6 +13,12 @@ generate_username = lambda: ''.join(random.choice(string.ascii_lowercase) for _ 
 generate_password = lambda: str(random.randint(settings.PASSWORD_BEGINING, settings.PASSWORD_END))
 
 
+class UserRefereeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'password', 'ring']
+
+
 class CompetitionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Competition
@@ -33,10 +39,14 @@ class RingSerializer(serializers.ModelSerializer):
         referees_group = Group.objects.get(name='referees')
         main_referees_group = Group.objects.get(name='main_referees')
         for i in range(3):
-            User.objects.create(username=generate_username(), password=generate_password(), ring=ring).groups.add(
-                referees_group)
-        User.objects.create(username=generate_username(), password=generate_password(), ring=ring).groups.add(
-            main_referees_group)
+            # User.objects.create(username=generate_username(), password=generate_password(), ring=ring).groups.add(
+            #     referees_group)
+            user_referee = UserRefereeSerializer.create(username=generate_username(), password=generate_password(), ring=ring)
+            user_referee.groups.add(referees_group)
+        # User.objects.create(username=generate_username(), password=generate_password(), ring=ring).groups.add(
+        #     main_referees_group)
+        main_user = UserRefereeSerializer.create(username=generate_username(), password=generate_password(), ring=ring)
+        main_user.groups.add(main_referees_group)
         return ring
 
     def to_representation(self, instance):

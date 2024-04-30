@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (CompetitionCreateApi, RingCreateApi, MatchCreateApi, MatchResultCreateApi,
                     CompetitionUpdateDeleteRetrieveAPi, RingUpdateDeleteRetieveApi, MatchResultUpdateDeleteRetriveApi,
-                    MatchUpdateDeleteRetriveAPI, GetRingApi, GetMatchResultApi)
+                    MatchUpdateDeleteRetriveAPI, GetRingApi, GetMatchResultApi, PatchMatchResultApi)
 
 # from .routing import websocket_urlpatterns as ws_urlpatterns
 
@@ -17,7 +17,9 @@ urlpatterns = [
     path('matchresult/', MatchResultCreateApi.as_view(), name='matchresult'),
     path('matchresult/<int:pk>/', MatchResultUpdateDeleteRetriveApi.as_view(),
          name='match_result_update_retrieve_destroy'),
-    path('referee-match-result/', GetMatchResultApi.as_view(), name='referee_match_result'),
+    path('referee-match-result/', PatchMatchResultApi.as_view(), name='referee_match_result'),
+    path('get-referee-match-result/', GetMatchResultApi.as_view(), name='referee_match_result'),
+
 ]
 
 # urlpatterns += ws_urlpatterns

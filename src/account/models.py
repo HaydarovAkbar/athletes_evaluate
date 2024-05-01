@@ -32,6 +32,12 @@ class User(AbstractUser):
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
+    def save(self, *args, **kwargs):
+        self.updated_at = now()
+        if self.password:
+            self.set_password(self.password)
+        return super().save(*args, **kwargs)
+
     class Meta:
         verbose_name = _("User")
         verbose_name_plural = _("Users")

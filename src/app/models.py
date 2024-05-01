@@ -48,7 +48,7 @@ class Ring(models.Model):
         ]
 
     def __str__(self):
-        return f"Ring for {self.competition.title}"
+        return f"Ring for {self.competition}"
 
 
 class Match(models.Model):
@@ -81,12 +81,12 @@ class MatchResult(models.Model):
         (2, 'user2'),
     )
 
-    user1_point = models.CharField(max_length=500, null=True)
-    user2_point = models.CharField(max_length=500, null=True)
-    match = models.OneToOneField(Match, on_delete=models.SET_NULL, null=True)
+    user1_point = models.CharField(max_length=500, null=True, blank=True)
+    user2_point = models.CharField(max_length=500, null=True, blank=True)
+    match = models.ForeignKey(Match, on_delete=models.SET_NULL, null=True)
     referee = models.OneToOneField(User, related_name='match_result', on_delete=models.SET_NULL, null=True)
-    total_point1 = models.PositiveIntegerField(null=True)
-    total_point2 = models.PositiveIntegerField(null=True)
+    total_point1 = models.IntegerField(null=True, blank=True)
+    total_point2 = models.IntegerField(null=True, blank=True)
 
     is_finished = models.BooleanField(default=False)
 
@@ -98,4 +98,4 @@ class MatchResult(models.Model):
         db_table = 'match_result'
 
     def __str__(self):
-        return f"{self.match.user1} vs {self.match.user2}'s result"
+        return f"{self.match} vs {self.match}'s result"

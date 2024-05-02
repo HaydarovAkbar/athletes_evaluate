@@ -144,6 +144,7 @@ class ChangeMatchStatusApi(generics.RetrieveUpdateDestroyAPIView):
         match_results = MatchResult.objects.filter(match=instance)
         for match_result in match_results:
             match_result.is_finished = True
+            match_result.save()
         instance.is_finished = True
         instance.save()
         return Response(status=status.HTTP_200_OK)

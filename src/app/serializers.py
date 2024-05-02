@@ -4,6 +4,9 @@ import random
 import string
 from django.conf import settings
 
+# def dehashed_password(password):
+#     return make_password(password)
+
 from account.models import User
 
 from .models import Competition, Ring, Match, MatchResult
@@ -38,10 +41,11 @@ class RingSerializer(serializers.ModelSerializer):
 
         referees_group = Group.objects.get(name='referees')
         main_referees_group = Group.objects.get(name='main_referees')
+        password = '111111'
         for i in range(3):
-            User.objects.create(username=generate_username(), password=generate_password(), ring=ring).groups.add(
+            User.objects.create(username=generate_username(), password=password, ring=ring).groups.add(
                 referees_group)
-        User.objects.create(username=generate_username(), password=generate_password(), ring=ring).groups.add(
+        User.objects.create(username=generate_username(), password=password, ring=ring).groups.add(
             main_referees_group)
         return ring
 
@@ -54,12 +58,12 @@ class RingSerializer(serializers.ModelSerializer):
         for ref in referees:
             if 'referees' in ref.groups.values_list('name', flat=True):
                 ring['data'] += [{'username': str(ref.username),
-                                  'password': str(ref.password),
+                                  'password': 111111,
                                   'is_main': False},
                                  ]
             else:
                 ring['data'] += [{'username': str(ref.username),
-                                  'password': str(ref.password),
+                                  'password': 111111,
                                   'is_main': True},
                                  ]
         return ring

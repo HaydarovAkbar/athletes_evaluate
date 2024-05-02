@@ -24,7 +24,7 @@ class User(AbstractUser):
                                                                                       code="invalid_username", )])
     password = models.CharField(max_length=255)
 
-    updated_at = models.DateTimeField(null=True)
+    updated_at = models.DateTimeField(null=True, blank=True, verbose_name=_("Updated At"))
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     USERNAME_FIELD = "username"

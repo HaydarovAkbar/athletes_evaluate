@@ -72,7 +72,7 @@ class Match(models.Model):
         ]
 
     def __str__(self):
-        return str(self.created_at)
+        return str(self.user1) + ' vs ' + str(self.user2)
 
 
 class MatchResult(models.Model):

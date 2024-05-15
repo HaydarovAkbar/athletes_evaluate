@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.utils.timezone import now
+from django.utils import timezone
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from phonenumber_field.modelfields import PhoneNumberField
@@ -33,10 +33,11 @@ class User(AbstractUser):
         return f"{self.first_name} {self.last_name}"
 
     def save(self, *args, **kwargs):
-        self.updated_at = now()
+        self.updated_at = timezone.now()
         if self.password:
             self.set_password(self.password)
-        return super().save(*args, **kwargs)
+        super(User, self).save(*args, **kwargs)
+        return self
 
     class Meta:
         verbose_name = _("User")

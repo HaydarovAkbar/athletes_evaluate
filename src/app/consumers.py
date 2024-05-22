@@ -22,7 +22,7 @@ class MatchResultConsumer(CreateModelMixin, UpdateModelMixin, GenericAsyncAPICon
     #     return qs.filter(referee=user, is_finished=False)
 
 
-class MainRefereeMatchResultConsumer(ListModelMixin, GenericAsyncAPIConsumer):
+class MainRefereeMatchResultConsumer(ListModelMixin, CreateModelMixin, UpdateModelMixin, GenericAsyncAPIConsumer):
     queryset = MatchResult.objects.all()
     serializer_class = MatchResultSerializer
     # permission_classes = (permissions.AllowAny)
@@ -37,10 +37,10 @@ class MainRefereeMatchResultConsumer(ListModelMixin, GenericAsyncAPIConsumer):
         self.model_change.subscribe()
 
     @model_observer(MatchResult)
-    async def model_change(self, message, **kwargs):
+    async def model_change(self, message, observer=None, **kwargs):
         await self.send_json(message)
 
     @model_change.serializer
     def model_serialize(self, instance, action, request_id=None, **kwargs):
-        # print(dict(data=MatchResultSerializer(instance=instance).data, action=action.value))
+        print(dict(data=MatchResultSerializer(instance=instance).data, action=action.value))
         return dict(data=MatchResultSerializer(instance=instance).data, action=action.value)

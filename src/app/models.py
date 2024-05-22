@@ -83,8 +83,8 @@ class MatchResult(models.Model):
 
     user1_point = models.CharField(max_length=500, null=True, blank=True)
     user2_point = models.CharField(max_length=500, null=True, blank=True)
-    match = models.ForeignKey(Match, on_delete=models.SET_NULL, null=True)
-    referee = models.OneToOneField(User, related_name='match_result', on_delete=models.SET_NULL, null=True)
+    match = models.ForeignKey(Match, on_delete=models.SET_NULL, null=True, blank=True)
+    referee = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     total_point1 = models.IntegerField(null=True, blank=True)
     total_point2 = models.IntegerField(null=True, blank=True)
 

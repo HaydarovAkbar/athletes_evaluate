@@ -23,4 +23,4 @@ urlpatterns = [
     path('change-match-status/<int:pk>/', ChangeMatchStatusApi.as_view(), name='change_match_status'),
 ]
 
-urlpatterns += ws_urlpatterns
+# urlpatterns += ws_urlpatterns

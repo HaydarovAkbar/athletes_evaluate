@@ -142,6 +142,11 @@ class ChangeMatchStatusApi(generics.RetrieveUpdateDestroyAPIView):
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
         match_results = MatchResult.objects.filter(match=instance)
+        not_finished = [match_result for match_result in match_results if not match_result.is_finished]
+        if not_finished:
+            refeere = "".join([str(match_result.referee) for match_result in not_finished])
+            data = {'message': f"Barcha o'yin natijalari yakunlanishi kerak [{refeere}]"}
+            return Response(status=status.HTTP_400_BAD_REQUEST, data=data)
         for match_result in match_results:
             match_result.is_finished = True
             match_result.save()

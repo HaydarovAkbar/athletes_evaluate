@@ -107,9 +107,12 @@ class PatchMatchResultApi(generics.RetrieveUpdateDestroyAPIView):
     filter_backends = [filters.DjangoFilterBackend]
     filterset_fields = ['match']
 
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     return MatchResult.objects.filter(referee=user, is_finished=False)
     def get_queryset(self):
-        user = self.request.user
-        return MatchResult.objects.filter(referee=user, is_finished=False)
+        instance = self.get_object()
+        return MatchResult.objects.filter(match=instance.match, is_finished=False)
 
 
 class GetMatchResultApi(generics.ListAPIView):
